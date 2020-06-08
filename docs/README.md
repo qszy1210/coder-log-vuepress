@@ -1,6 +1,6 @@
 ---
 home: true
-heroImage: /assets/logo.jpg
+heroImage: /assets/img/logo.jpg
 heroText: 北山秋叶
 tagline: 岁月难敌，且行且努力且珍惜。
 actionText: 进入博客 →

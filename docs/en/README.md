@@ -1,6 +1,6 @@
 ---
 home: true
-heroImage: /assets/logo.jpg
+heroImage: /assets/img/logo.jpg
 heroText: 北山秋叶
 tagline: CodingCookingRunning
 actionText: get start →

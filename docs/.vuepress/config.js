@@ -1,7 +1,7 @@
 module.exports = {
     title: '北山秋叶',
     description: '北山秋叶的博客',
-    base: '/blog/',
+    base: '/coder-log-vuepress/',
     head: [
         [
             'link',
