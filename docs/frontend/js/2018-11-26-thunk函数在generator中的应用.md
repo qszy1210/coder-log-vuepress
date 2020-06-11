@@ -5,7 +5,7 @@ tags:
 ---
 
 
-## thunk函数在generator中的应用
+# thunk函数在generator中的应用
 
 首先 thunk 搜索的时候, 似乎就是一个计算机术语. thunk 被翻译为"形实转化程序",其实可以理解为一个转化程序
 所以, js 中的 thunk 就是将 generator 函数进行转化, 以便能方便的进行使用.
