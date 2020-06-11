@@ -66,7 +66,7 @@ module.exports = {
                 {
                     title: 'javascript',
                     path: '/frontend/js/',
-                    collapsable: false,
+                    // collapsable: false,
                     sidebarDepth: 0,
                     children: [
                         'js/2018-08-04-js数组删除多个元素的方法',
@@ -128,6 +128,32 @@ module.exports = {
                         'js/js-test',
                         'js/promise的es5实现',
                         'js/super与箭头函数',
+                    ]
+                },
+                {
+                    title: 'reactjs',
+                    path: '/frontend/reactjs/',
+                    // collapsable: false,
+                    sidebarDepth: 0,
+                    children: [
+                        'reactjs/2019-09-19-面试题目解析与自己的理解',
+                        'reactjs/2019-10-12-react区分有无状态',
+                        'reactjs/2019-10-31-react16.4的生命周期',
+                    ]
+                },
+                {
+                    title: 'git',
+                    path: '/frontend/git/',
+                    // collapsable: false,
+                    sidebarDepth: 0,
+                    children: [
+                        'git/2019-04-09-使用 gitstats 来统计代码',
+                        'git/2019-04-09-git代码统计',
+                        'git/2019-06-25-关于git-cherry-pick的一个疑惑',
+                        'git/2019-07-31-git-comment-char-change',
+                        'git/2019-12-24-git-remove',
+                        'git/2019-12-31-git-sub-modules',
+                        'git/通过gitee进行代码同步',
                     ]
                 },
             ],
