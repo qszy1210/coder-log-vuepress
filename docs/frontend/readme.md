@@ -1,3 +1,7 @@
+---
+pageClass: frontend
+---
+
 # coder-life
 
 如同大象放进冰箱一样的三步骤， 我认为做好一件事情的三步骤：
