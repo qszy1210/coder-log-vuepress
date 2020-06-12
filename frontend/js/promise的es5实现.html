@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta id="referrer" name="referrer" content="never" />
+    <!-- <meta id="referrer" name="referrer" content="always" /> -->
+    <title>promise的es5实现 | 北山秋叶</title>
+    <meta name="description" content="">
+    <link rel="icon" href="/coder-log-vuepress/assets/favicon.ico">
+    <meta name="description" content="北山秋叶的博客">
+    <link rel="preload" href="/coder-log-vuepress/assets/css/0.styles.f54c0094.css" as="style"><link rel="preload" href="/coder-log-vuepress/assets/js/app.5183f16d.js" as="script"><link rel="preload" href="/coder-log-vuepress/assets/js/2.b73e1f60.js" as="script"><link rel="preload" href="/coder-log-vuepress/assets/js/90.5d53705b.js" as="script"><link rel="prefetch" href="/coder-log-vuepress/assets/js/10.380d0e88.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/100.d6c5c042.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/101.bc1d2979.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/102.55a0504f.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/103.c5fdec7f.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/104.8539756c.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/105.ce9a4d45.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/106.21fd0baa.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/107.54e5016c.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/108.ab6e9cbb.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/109.8ae8b262.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/11.a37b749f.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/110.88e4bf18.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/111.ed813e9d.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/112.c52f9b2b.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/113.5e27986b.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/114.f12d8ba8.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/115.82f385e9.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/116.412cdea3.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/117.7891e30c.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/118.ad0cbc50.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/119.73d6fe03.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/12.e6719e28.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/120.e4cb8cf7.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/121.f5583cb9.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/122.64b36618.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/123.af0fcf58.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/124.5a6a4ef9.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/125.d00c19bb.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/126.7e53f0c9.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/127.892a9eca.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/128.c1309e0c.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/129.7986edf6.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/13.0267c6cb.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/130.0c8359ff.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/131.10cac26c.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/132.9dbd6f0e.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/133.015ce486.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/134.576ed6b4.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/135.7a6f09bc.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/136.c4ab4416.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/137.a004d416.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/138.8011cde3.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/139.2cb0e268.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/14.47f20af5.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/140.715fac06.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/141.1bd11a7c.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/142.115fad96.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/143.20501913.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/144.0041722b.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/145.a8918ad4.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/146.36b6a483.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/15.32479d38.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/16.767bbb48.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/17.8dd9432e.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/18.374d3350.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/19.e6f37402.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/20.e9090372.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/21.2f043b44.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/22.9bcb029f.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/23.4b92d6b7.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/24.27205788.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/25.4a3df874.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/26.e0664bc5.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/27.db37581d.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/28.ea9dea1b.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/29.2e9e6117.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/3.5aed935e.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/30.3f8235f9.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/31.fde68b28.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/32.c60d69a6.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/33.d0c7fcfd.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/34.10de18b3.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/35.16fb46a2.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/36.8e6fee2a.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/37.f9ef009b.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/38.2750bb63.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/39.d588d747.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/4.d048f882.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/40.a69d200e.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/41.66ddb206.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/42.75ee774e.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/43.6a26f75f.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/44.e9f41f06.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/45.72852a39.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/46.48d76fdf.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/47.9e682f3e.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/48.f74b81b9.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/49.5da4591f.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/5.ca22c8e0.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/50.1cbd4621.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/51.9df95be9.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/52.9f021c09.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/53.bca47e8e.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/54.5591c6da.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/55.90cc3c28.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/56.f0ae27d6.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/57.a37e95b6.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/58.39d70822.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/59.094e1f75.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/6.c64adebd.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/60.1f579170.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/61.d7582024.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/62.0fe0cf71.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/63.944862a5.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/64.9c844677.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/65.6a0b9d6c.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/66.b19e4660.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/67.5a3cdf8a.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/68.395db222.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/69.23d721a0.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/7.5f9807bc.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/70.a991949c.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/71.84e9f984.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/72.b2852bd1.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/73.624019f5.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/74.c962f5af.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/75.982b900f.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/76.1e6790a2.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/77.33b7bb61.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/78.c3c0d4e8.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/79.de946b29.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/8.423f9ee6.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/80.fb0400e1.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/81.67a63748.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/82.3b90f287.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/83.059b41ea.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/84.1ada4167.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/85.d761e78a.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/86.5f4bd98d.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/87.e9d8b268.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/88.d1dace17.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/89.d0f6e3b1.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/9.aea3c3ca.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/91.09a7662b.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/92.14274ce3.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/93.a82a6049.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/94.193f8863.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/95.9f75ab34.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/96.a13ba5d9.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/97.9f5dcbd2.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/98.bc522e4a.js"><link rel="prefetch" href="/coder-log-vuepress/assets/js/99.1f5dc40a.js">
+    <link rel="stylesheet" href="/coder-log-vuepress/assets/css/0.styles.f54c0094.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/coder-log-vuepress/" class="home-link router-link-active"><img src="/coder-log-vuepress/assets/img/user-logo.jpg" alt="北山秋叶" class="logo"> <span class="site-name can-hide">北山秋叶</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/coder-log-vuepress/" class="nav-link">
+  Home
+</a></div><div class="nav-item"><a href="/coder-log-vuepress/frontend/" class="nav-link router-link-active">
+  前端
+</a></div><div class="nav-item"><a href="/coder-log-vuepress/tool/" class="nav-link">
+  利器
+</a></div><div class="nav-item"><a href="/coder-log-vuepress/thinking/" class="nav-link">
+  感悟
+</a></div><div class="nav-item"><a href="/coder-log-vuepress/life/" class="nav-link">
+  生活
+</a></div> <a href="https://github.com/qszy1210/coder-log-vuepress" target="_blank" rel="noopener noreferrer" class="repo-link">
+    查看源码
+    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/coder-log-vuepress/" class="nav-link">
+  Home
+</a></div><div class="nav-item"><a href="/coder-log-vuepress/frontend/" class="nav-link router-link-active">
+  前端
+</a></div><div class="nav-item"><a href="/coder-log-vuepress/tool/" class="nav-link">
+  利器
+</a></div><div class="nav-item"><a href="/coder-log-vuepress/thinking/" class="nav-link">
+  感悟
+</a></div><div class="nav-item"><a href="/coder-log-vuepress/life/" class="nav-link">
+  生活
+</a></div> <a href="https://github.com/qszy1210/coder-log-vuepress" target="_blank" rel="noopener noreferrer" class="repo-link">
+    查看源码
+    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></nav>  <ul class="sidebar-links"><li><a href="/coder-log-vuepress/frontend/" aria-current="page" class="sidebar-link">coder-life</a></li><li><section class="sidebar-group collapsable depth-0"><a href="/coder-log-vuepress/frontend/js/" class="sidebar-heading clickable router-link-active open"><span>javascript</span> <span class="arrow down"></span></a> <ul class="sidebar-links sidebar-group-items"><li><a href="/coder-log-vuepress/frontend/js/2018-08-04-js数组删除多个元素的方法.html" class="sidebar-link">js数组删除多个元素</a></li><li><a href="/coder-log-vuepress/frontend/js/2018-08-04-js隐士转换.html" class="sidebar-link">js隐士转换</a></li><li><a href="/coder-log-vuepress/frontend/js/2019-07-16-flat-array.html" class="sidebar-link">2019-07-16-flat-array</a></li><li><a href="/coder-log-vuepress/frontend/js/2018-11-26-thunk函数在generator中的应用.html" class="sidebar-link">thunk函数在generator中的应用</a></li><li><a href="/coder-log-vuepress/frontend/js/2019-03-09-多个异步保持队列的方法.html" class="sidebar-link">多个异步保持队列的方法</a></li><li><a href="/coder-log-vuepress/frontend/js/2019-04-09-数组去重的两个小技巧.html" class="sidebar-link">数组去重的两个小技巧</a></li><li><a href="/coder-log-vuepress/frontend/js/2019-04-09-js中的方法注入.html" class="sidebar-link">javascript 中的方法注入</a></li><li><a href="/coder-log-vuepress/frontend/js/2019-04-10-前端重要的几个东西.html" class="sidebar-link">前端重要的几个东西</a></li><li><a href="/coder-log-vuepress/frontend/js/2019-04-16-再说js隐式转换.html" class="sidebar-link">再说js隐式转换</a></li><li><a href="/coder-log-vuepress/frontend/js/2019-04-17-一个闭包的小问题.html" class="sidebar-link">看一个闭包的小问题</a></li><li><a href="/coder-log-vuepress/frontend/js/2019-04-20-js中的队列.html" class="sidebar-link">js 队列</a></li><li><a href="/coder-log-vuepress/frontend/js/2019-05-07-javascript优先级的一个注意点.html" class="sidebar-link">javascript优先级注意点</a></li><li><a href="/coder-log-vuepress/frontend/js/2019-05-20-javacript中的进制标识.html" class="sidebar-link">javacript中的进制标识</a></li><li><a href="/coder-log-vuepress/frontend/js/2019-05-22-解析全等注意事项.html" class="sidebar-link">es6解析的默认值注意事项</a></li><li><a href="/coder-log-vuepress/frontend/js/2019-06-06-Object-prototype-may-only-be-an-Object-or-null-undefined.html" class="sidebar-link">Object prototype may only be an Object or null: undefined</a></li><li><a href="/coder-log-vuepress/frontend/js/2019-06-09-array-curry.html" class="sidebar-link">2019-06-09-array-curry</a></li><li><a href="/coder-log-vuepress/frontend/js/2019-06-13-js-取反.html" class="sidebar-link">js-取反</a></li><li><a href="/coder-log-vuepress/frontend/js/2019-06-25-parseInt的有趣研究.html" class="sidebar-link">2019-06-25-parseInt的有趣研究</a></li><li><a href="/coder-log-vuepress/frontend/js/2019-06-26-js中几个基础函数的研究.html" class="sidebar-link">js中几个基础函数的研究</a></li><li><a href="/coder-log-vuepress/frontend/js/2019-07-03-遍历数组-复制数组-迭代对象.html" class="sidebar-link">遍历数组-复制数组-迭代对象</a></li><li><a href="/coder-log-vuepress/frontend/js/2019-08-03-bitadd.html" class="sidebar-link">2019-08-03-bitadd</a></li><li><a href="/coder-log-vuepress/frontend/js/2019-08-05-ast.html" class="sidebar-link">2019-08-05-ast</a></li><li><a href="/coder-log-vuepress/frontend/js/2019-08-05-proxy-sample.html" class="sidebar-link">2019-08-05-proxy-sample</a></li><li><a href="/coder-log-vuepress/frontend/js/2019-08-06-input处理中文输入的问题.html" class="sidebar-link">2019-08-06-input处理中文输入的问题</a></li><li><a href="/coder-log-vuepress/frontend/js/2019-08-07-文件断点续传-前端和后端实现.html" class="sidebar-link">2019-08-07-文件断点续传-前端和后端实现</a></li><li><a href="/coder-log-vuepress/frontend/js/2019-08-14-数字大于undefiend么.html" class="sidebar-link">数字大于undefiend么</a></li><li><a href="/coder-log-vuepress/frontend/js/2019-09-18-es6箭头函数你真的理解了么.html" class="sidebar-link">2019-09-18-es6箭头函数你真的理解了么</a></li><li><a href="/coder-log-vuepress/frontend/js/2019-09-27-instanceof-js-实现.html" class="sidebar-link">2019-09-27-instanceof-js-实现</a></li><li><a href="/coder-log-vuepress/frontend/js/2019-10-11-js-tofixed.html" class="sidebar-link">2019-10-11-js-tofixed</a></li><li><a href="/coder-log-vuepress/frontend/js/2019-10-12-重新审视原型链.html" class="sidebar-link">2019-10-12-重新审视原型链</a></li><li><a href="/coder-log-vuepress/frontend/js/2019-10-12-js调试原理.html" class="sidebar-link">js调试原理</a></li><li><a href="/coder-log-vuepress/frontend/js/2019-10-24-防抖和节流的区别.html" class="sidebar-link">2019-08-15-防抖和节流的区别</a></li><li><a href="/coder-log-vuepress/frontend/js/2019-10-28-test-case-example.html" class="sidebar-link">2019-10-28-test-case-example</a></li><li><a href="/coder-log-vuepress/frontend/js/2019-10-31-递归-循环.html" class="sidebar-link">2019-10-31-递归-循环</a></li><li><a href="/coder-log-vuepress/frontend/js/2019-11-28-利用proxy实现的简单的观察者模式.html" class="sidebar-link">2019-11-28-利用proxy实现的简单的观察者模式</a></li><li><a href="/coder-log-vuepress/frontend/js/2019-12-11-cookie的获取.html" class="sidebar-link">cookie的获取</a></li><li><a href="/coder-log-vuepress/frontend/js/2019-12-12-怎么将typescript应用到自己写的js文件中.html" class="sidebar-link">怎么将typescript应用到自己写的js文件中</a></li><li><a href="/coder-log-vuepress/frontend/js/2019-12-17-javascript-switch-equal.html" class="sidebar-link">javascript-switch-equal</a></li><li><a href="/coder-log-vuepress/frontend/js/2019-12-18-function-scope.html" class="sidebar-link">function-scope</a></li><li><a href="/coder-log-vuepress/frontend/js/2019-12-20-js中的表达式和声明-1.html" class="sidebar-link">js中的表达式和声明</a></li><li><a href="/coder-log-vuepress/frontend/js/2019-12-24-configurable-的一个小问题.html" class="sidebar-link">configurable-的一个小问题</a></li><li><a href="/coder-log-vuepress/frontend/js/2019-12-31-词法作用域.html" class="sidebar-link">词法作用域</a></li><li><a href="/coder-log-vuepress/frontend/js/2019-12-31-promise的神奇.html" class="sidebar-link">promise的神奇</a></li><li><a href="/coder-log-vuepress/frontend/js/2020-02-13-通过null进行isNil的判断.html" class="sidebar-link">通过null进行isNil的判断</a></li><li><a href="/coder-log-vuepress/frontend/js/2020-02-13-new内置对象的一些东东.html" class="sidebar-link">new内置对象的一些东东</a></li><li><a href="/coder-log-vuepress/frontend/js/2020-02-20-asyncify方法.html" class="sidebar-link">asyncify方法</a></li><li><a href="/coder-log-vuepress/frontend/js/2020-02-21-代码习惯-Object-assign.html" class="sidebar-link">代码习惯-Object.assign</a></li><li><a href="/coder-log-vuepress/frontend/js/2020-03-02-function-TDZ.html" class="sidebar-link">function-TDZ</a></li><li><a href="/coder-log-vuepress/frontend/js/2020-03-02-TDZ.html" class="sidebar-link">TDZ</a></li><li><a href="/coder-log-vuepress/frontend/js/2020-03-04-工作10多年-才真正理解什么是闭包.html" class="sidebar-link">到底什么是闭包</a></li><li><a href="/coder-log-vuepress/frontend/js/2020-03-10-兼容数组的小技巧.html" class="sidebar-link">2020-03-10-兼容数组的小技巧</a></li><li><a href="/coder-log-vuepress/frontend/js/关于引用的一点注意.html" class="sidebar-link">关于引用的一点注意</a></li><li><a href="/coder-log-vuepress/frontend/js/记录传递参数解析中的一个问题以及解决过程.html" class="sidebar-link">记录传递参数解析中的一个问题以及解决过程</a></li><li><a href="/coder-log-vuepress/frontend/js/静态和动态作用域.html" class="sidebar-link">静态和动态作用域</a></li><li><a href="/coder-log-vuepress/frontend/js/再谈reduce.html" class="sidebar-link">再谈reduce</a></li><li><a href="/coder-log-vuepress/frontend/js/js-test.html" class="sidebar-link">js-test</a></li><li><a href="/coder-log-vuepress/frontend/js/promise的es5实现.html" class="active sidebar-link">promise的es5实现</a></li><li><a href="/coder-log-vuepress/frontend/js/super与箭头函数.html" class="sidebar-link">super与箭头函数</a></li></ul></section></li><li><section class="sidebar-group collapsable depth-0"><a href="/coder-log-vuepress/frontend/reactjs/" class="sidebar-heading clickable"><span>reactjs</span> <span class="arrow right"></span></a> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><a href="/coder-log-vuepress/frontend/git/" class="sidebar-heading clickable"><span>git</span> <span class="arrow right"></span></a> <!----></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h2 id="promise-的-es5-实现"><a href="#promise-的-es5-实现" class="header-anchor">#</a> promise 的 es5 实现</h2> <p>首先要理解promise的几个关键点</p> <h3 id="思想"><a href="#思想" class="header-anchor">#</a> 思想:</h3> <p>状态三种: pending reject resolve
+then返回的是新的promise
+then的方法中必须要有返回值, 下一个链式的 then 才能够接收到.
+直接的 promise 实例, 可以直接 then, then 会接收 resolve 或者 reject 的结果.</p> <p>伪实现:
+状态属性 status</p> <p>resolve, reject 对状态进行更改;</p> <p>then 接收 resolve 或者 reject 的结果;</p> <h3 id="伪实现"><a href="#伪实现" class="header-anchor">#</a> 伪实现:</h3> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">function</span> <span class="token function">pp</span> <span class="token punctuation">(</span><span class="token parameter">callback</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">var</span> status <span class="token operator">=</span> <span class="token string">'pending'</span><span class="token punctuation">;</span>
+    <span class="token keyword">function</span> <span class="token function">resolve</span><span class="token punctuation">(</span><span class="token parameter">data</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        status <span class="token operator">=</span> <span class="token string">'resolved'</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">function</span> <span class="token function">reject</span><span class="token punctuation">(</span><span class="token parameter">error</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        status <span class="token operator">=</span> <span class="token string">'reject'</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token function">callback</span><span class="token punctuation">(</span>resolve<span class="token punctuation">,</span> reject<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+pp<span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function-variable function">then</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">resolveFunc<span class="token punctuation">,</span> rejectFunc</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">var</span> data<span class="token punctuation">;</span> <span class="token comment">// resolve 的结果</span>
+    <span class="token keyword">var</span> error<span class="token punctuation">;</span><span class="token comment">//reject 的结果</span>
+    <span class="token keyword">var</span> thenResult <span class="token operator">=</span> <span class="token function">resolveFunc</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">//rejectFunc(error);</span>
+    <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">pp</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+</code></pre></div><h3 id="疑点-其实一点都没解决这个问题"><a href="#疑点-其实一点都没解决这个问题" class="header-anchor">#</a> 疑点:(其实一点都没解决这个问题)</h3> <ol><li>怎么解决实例化的时候, 外部方法传入的时候, 将 rel, rej 进行传入的问题 function(rel, rej){}</li> <li>怎么解决状态传递的问题</li> <li>怎么解决data传递问题</li></ol> <h3 id="回答我的疑问"><a href="#回答我的疑问" class="header-anchor">#</a> 回答我的疑问:</h3> <ol><li>首先要说的是没有确切明白 promise 中的各个的用法,以及哪些方法是要方法自身提供, 哪些方法是外部提供的.
+虽然使用的时候感觉不到什么, 但是实现的时候却是要非常清楚的.</li></ol> <p>比如 Promise 的构造方法</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">new</span> <span class="token class-name">Promise</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">rel<span class="token punctuation">,</span> rej</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token function">rel</span><span class="token punctuation">(</span><span class="token string">'ok'</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre></div><p>这其中的 rel 和 rej 是 Promise 提供的, 而其中的 'ok' 的结果是外部传入的.
+这其中的整个方法 function(rel, rej){rel('ok)} 也是外部提供的</p> <p>比如 then 方法</p> <div class="language-js extra-class"><pre class="language-js"><code>Promise<span class="token punctuation">.</span><span class="token function">resolve</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token parameter">data</span><span class="token operator">=&gt;</span><span class="token punctuation">{</span>
+    <span class="token operator">...</span><span class="token punctuation">.</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre></div><p>then 接收的方法是外部传入的, 但是这个 <em>data</em> 是 promise 提供的.</p> <p>这些当然说起来很简单, 但是能够在编写的时候时刻注意, 时刻明确, 我认为不是一件容易的事情.</p> <ol start="2"><li>状态的传递 以及 data 的传递.可以通过 promise 实例进行持有, 然后在 then, catch 等方法的时候进行转移.
+而转移的方法通过更改当前的上下文, 有方法 bind, call, apply 都可以进行采用. 这里比较方便的是采用 call 进行转移</li></ol> <h3 id="进一步实现-在原来伪实现的基础上进行更改"><a href="#进一步实现-在原来伪实现的基础上进行更改" class="header-anchor">#</a> 进一步实现, 在原来伪实现的基础上进行更改</h3> <div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">//这里真是伪实现-_-, 在无任何参考的情况下,想到了这里, 还是需要进一步的思考</span>
+
+<span class="token comment">//方法名称最好大写一下, 我们这个方法主要记录一下状态和数据</span>
+<span class="token comment">// function pp (callback) {</span>
+<span class="token keyword">function</span> <span class="token constant">PP</span> <span class="token punctuation">(</span><span class="token parameter">callback</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">//stats因为需要进行传递, 所以绑定在 this 上, 状态我们制定为 三种 'pending' 'resolve' 'reject'</span>
+    <span class="token comment">//默认为 pending, 切换到 resolve 和 reject</span>
+    <span class="token comment">// var status = 'pending';</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>status <span class="token operator">=</span> <span class="token string">'pending'</span><span class="token punctuation">;</span>
+    <span class="token comment">//用来记录正常流程处理的内容</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>data<span class="token punctuation">;</span>
+    <span class="token comment">//用来记录error信息的</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>error<span class="token punctuation">;</span>
+
+    <span class="token keyword">var</span> that <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">;</span>
+    <span class="token comment">//内部提供这个方法, 但是这个 data 是外部提供的, 我们需要记录这个 data, 用于传递给以后的 实例</span>
+    <span class="token comment">//todo 对于如果传递的 data 是 Promise 类型的, 还需要进一步的进行处理为正常的对象或者平数据</span>
+    <span class="token keyword">function</span> <span class="token function">resolve</span><span class="token punctuation">(</span><span class="token parameter">data</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        that<span class="token punctuation">.</span>data <span class="token operator">=</span> data<span class="token punctuation">;</span>
+        that<span class="token punctuation">.</span>status <span class="token operator">=</span> <span class="token string">'resolved'</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">function</span> <span class="token function">reject</span><span class="token punctuation">(</span><span class="token parameter">error</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        that<span class="token punctuation">.</span>error <span class="token operator">=</span> error<span class="token punctuation">;</span>
+        that<span class="token punctuation">.</span>status <span class="token operator">=</span> <span class="token string">'reject'</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">try</span> <span class="token punctuation">{</span>
+        <span class="token function">callback</span><span class="token punctuation">(</span>resolve<span class="token punctuation">,</span> reject<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">catch</span><span class="token punctuation">(</span>error<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token function">reject</span><span class="token punctuation">(</span>error<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">//then 方法接收成功和失败的处理方法, 什么情况下接收成功和失败需要看 PP 中存储的是什么类型的内容,</span>
+<span class="token comment">//因为是通过 PP.prototype.  的形式进行调用, 所以我们能获取到 this</span>
+<span class="token comment">//但是需要注意返回的是一个新的 promise</span>
+<span class="token comment">// pp.prototype.then = function (resolveFunc, rejectFunc) {</span>
+<span class="token class-name">PP</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function-variable function">then</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">resolveFunc<span class="token punctuation">,</span> rejectFunc</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// var data; // resolve 的结果</span>
+    <span class="token comment">// var error;//reject 的结果</span>
+    <span class="token comment">// var thenResult = resolveFunc(data);</span>
+    <span class="token comment">//rejectFunc(error);</span>
+
+    <span class="token comment">//需要根据promise的内容决定返回怎么样的promise</span>
+    <span class="token keyword">var</span> promise<span class="token punctuation">;</span>
+    <span class="token keyword">var</span> that <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">;</span>
+    <span class="token comment">//如果 this.data 有内容, 说明执行了成功的</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>that<span class="token punctuation">.</span>data<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        promise <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">PP</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">rel</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token comment">//因为then是异步的函数, 所以增加一个 setTimeout</span>
+            <span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                <span class="token comment">//后续的promise会接收then的返回结果</span>
+                <span class="token keyword">var</span> thenResult <span class="token operator">=</span> <span class="token function">resolveFunc</span><span class="token punctuation">(</span>that<span class="token punctuation">.</span>data<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token function">rel</span><span class="token punctuation">(</span>thenResult<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>that<span class="token punctuation">.</span>error<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        promise <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">PP</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">rel<span class="token punctuation">,</span> rej</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                <span class="token keyword">var</span> thenResult <span class="token operator">=</span> <span class="token function">rejectFunc</span><span class="token punctuation">(</span>that<span class="token punctuation">.</span>error<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token function">rej</span><span class="token punctuation">(</span>thenResult<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">//返回一个新的promise</span>
+    <span class="token comment">// return new pp();</span>
+    <span class="token keyword">return</span> promise<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">//catch 方法接收前边的error方法, 其实就是一个 只有 reject 的 then</span>
+<span class="token comment">//这里直接把上边的 then copy 一半过来</span>
+<span class="token class-name">PP</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function-variable function">catch</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">error</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">//需要根据promise的内容决定返回怎么样的promise</span>
+    <span class="token keyword">var</span> promise<span class="token punctuation">;</span>
+    <span class="token keyword">var</span> that <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">;</span>
+    <span class="token comment">//如果 this.data 有内容, 说明执行了成功的</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>that<span class="token punctuation">.</span>error<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        promise <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">PP</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">rel<span class="token punctuation">,</span> rej</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                <span class="token keyword">var</span> thenResult <span class="token operator">=</span> <span class="token function">rejectFunc</span><span class="token punctuation">(</span>that<span class="token punctuation">.</span>error<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token function">rej</span><span class="token punctuation">(</span>thenResult<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">//返回一个新的promise</span>
+    <span class="token comment">// return new pp();</span>
+    <span class="token keyword">return</span> promise<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+</code></pre></div><h3 id="简单的一个测试"><a href="#简单的一个测试" class="header-anchor">#</a> 简单的一个测试</h3> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">var</span> aa<span class="token operator">=</span><span class="token keyword">new</span> <span class="token class-name">PP</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">rel<span class="token punctuation">,</span>rej</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token function">rej</span><span class="token punctuation">(</span><span class="token string">'ok123'</span><span class="token punctuation">)</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+aa<span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">d</span><span class="token punctuation">)</span><span class="token punctuation">{</span>console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>d<span class="token punctuation">)</span><span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">error</span><span class="token punctuation">)</span><span class="token punctuation">{</span>console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>error<span class="token punctuation">)</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><h3 id="进一步完善"><a href="#进一步完善" class="header-anchor">#</a> 进一步完善</h3> <h4 id="引子"><a href="#引子" class="header-anchor">#</a> 引子</h4> <p>看起来挺好的一个实现, 其实问题很多. 首先既然是 promise 肯定存在一个 pending的中间状态.
+我这里默认的是直接将 pending 设置为了 resolve(fulfilled) 状态, 失去了 promise 的意义.
+这样 then 直接执行, 接收的是 上一个 promise 的 data 和 status, 但是这里由于异步所以接收不到了.</p> <p>所以我们需要有一个机制去完成这个记录工作,并且在需要执行的时候进行执行, 并且then 还能够接收到.</p> <p>如果then这个时候接收到的是 pending 的说明还没有执行, 那么就进行一下记录, 让 promise 在执行 resolve 的时候
+再进行执行.</p> <h4 id="resolve-的-promise-问题"><a href="#resolve-的-promise-问题" class="header-anchor">#</a> resolve 的 promise 问题</h4> <p>如果 resolve 接收的是一个 promise, 那么还需要进一步的执行 then 方法, 得到最后的结果(此处省略)</p> <p>如下代码</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">//这里真是伪实现-_-, 在无任何参考的情况下,想到了这里, 还是需要进一步的思考</span>
+
+<span class="token comment">//方法名称最好大写一下, 我们这个方法主要记录一下状态和数据</span>
+<span class="token comment">// function pp (callback) {</span>
+<span class="token keyword">function</span> <span class="token constant">PP</span> <span class="token punctuation">(</span><span class="token parameter">callback</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">//stats因为需要进行传递, 所以绑定在 this 上, 状态我们制定为 三种 'pending' 'resolve' 'reject'</span>
+    <span class="token comment">//默认为 pending, 切换到 resolve 和 reject</span>
+    <span class="token comment">// var status = 'pending';</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>status <span class="token operator">=</span> <span class="token string">'pending'</span><span class="token punctuation">;</span>
+    <span class="token comment">//用来记录正常流程处理的内容</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>data<span class="token punctuation">;</span>
+    <span class="token comment">//用来记录error信息的</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>error<span class="token punctuation">;</span>
+
+    <span class="token comment">//&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; 增加内容</span>
+    <span class="token comment">//对应下边的增加, 这里需要增加声明</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>toExecuteResolve <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>toExecuteReject <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+    <span class="token comment">//&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;</span>
+
+    <span class="token keyword">var</span> that <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">;</span>
+    <span class="token comment">//内部提供这个方法, 但是这个 data 是外部提供的, 我们需要记录这个 data, 用于传递给以后的 实例</span>
+    <span class="token comment">//todo 对于如果传递的 data 是 Promise 类型的, 还需要进一步的进行处理为正常的对象或者平数据</span>
+    <span class="token keyword">function</span> <span class="token function">doResolve</span><span class="token punctuation">(</span><span class="token parameter">data</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        that<span class="token punctuation">.</span>data <span class="token operator">=</span> data<span class="token punctuation">;</span>
+        that<span class="token punctuation">.</span>status <span class="token operator">=</span> <span class="token string">'resolved'</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">function</span> <span class="token function">resolve</span><span class="token punctuation">(</span><span class="token parameter">data</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>that<span class="token punctuation">.</span>status <span class="token operator">!==</span> <span class="token string">'pending'</span><span class="token punctuation">)</span> <span class="token keyword">return</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>that<span class="token punctuation">.</span>toExecuteResolve <span class="token operator">&amp;&amp;</span> that<span class="token punctuation">.</span>toExecuteResolve<span class="token punctuation">.</span>length<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            that<span class="token punctuation">.</span>toExecuteResolve<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">relFunction</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                <span class="token comment">//执行 then 里边的逻辑</span>
+                <span class="token keyword">var</span> thenResult <span class="token operator">=</span> <span class="token function">relFunction</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token function">doResolve</span><span class="token punctuation">(</span>thenResult<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            that<span class="token punctuation">.</span>toExecuteResolve <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+
+    <span class="token keyword">function</span> <span class="token function">doReject</span><span class="token punctuation">(</span><span class="token parameter">error</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        that<span class="token punctuation">.</span>error <span class="token operator">=</span> error<span class="token punctuation">;</span>
+        that<span class="token punctuation">.</span>status <span class="token operator">=</span> <span class="token string">'reject'</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">function</span> <span class="token function">reject</span><span class="token punctuation">(</span><span class="token parameter">error</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>that<span class="token punctuation">.</span>toExecuteReject <span class="token operator">&amp;&amp;</span> that<span class="token punctuation">.</span>toExecuteReject<span class="token punctuation">.</span>length<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            that<span class="token punctuation">.</span>toExecuteReject<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">rej</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                <span class="token keyword">var</span> thenResult <span class="token operator">=</span> <span class="token function">rej</span><span class="token punctuation">(</span>error<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token function">doReject</span><span class="token punctuation">(</span>thenResult<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            that<span class="token punctuation">.</span>toExecuteReject <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">try</span> <span class="token punctuation">{</span>
+        <span class="token function">callback</span><span class="token punctuation">(</span>resolve<span class="token punctuation">,</span> reject<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">catch</span><span class="token punctuation">(</span>error<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token function">reject</span><span class="token punctuation">(</span>error<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">//then 方法接收成功和失败的处理方法, 什么情况下接收成功和失败需要看 PP 中存储的是什么类型的内容,</span>
+<span class="token comment">//因为是通过 PP.prototype.  的形式进行调用, 所以我们能获取到 this</span>
+<span class="token comment">//但是需要注意返回的是一个新的 promise</span>
+<span class="token comment">// pp.prototype.then = function (resolveFunc, rejectFunc) {</span>
+<span class="token class-name">PP</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function-variable function">then</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">resolveFunc<span class="token punctuation">,</span> rejectFunc</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// var data; // resolve 的结果</span>
+    <span class="token comment">// var error;//reject 的结果</span>
+    <span class="token comment">// var thenResult = resolveFunc(data);</span>
+    <span class="token comment">//rejectFunc(error);</span>
+
+    <span class="token comment">//需要根据promise的内容决定返回怎么样的promise</span>
+    <span class="token keyword">var</span> promise<span class="token punctuation">;</span>
+    <span class="token keyword">var</span> that <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">;</span>
+
+    <span class="token comment">//&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; 增加内容</span>
+    <span class="token comment">//验证状态</span>
+    <span class="token keyword">var</span> status <span class="token operator">=</span> that<span class="token punctuation">.</span>status<span class="token punctuation">;</span>
+
+    <span class="token comment">//仍然是pending状态, 那么不进行执行, 将状态进行存储</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>status <span class="token operator">===</span> <span class="token string">'pending'</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        that<span class="token punctuation">.</span>toExecuteResolve<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>resolveFunc<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        that<span class="token punctuation">.</span>toExecuteReject<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>rejectFunc<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">//&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;</span>
+
+    <span class="token comment">//如果 this.data 有内容, 说明执行了成功的</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>that<span class="token punctuation">.</span>data<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        promise <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">PP</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">rel</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token comment">//因为then是异步的函数, 所以增加一个 setTimeout</span>
+            <span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                <span class="token comment">//后续的promise会接收then的返回结果</span>
+                <span class="token keyword">var</span> thenResult <span class="token operator">=</span> <span class="token function">resolveFunc</span><span class="token punctuation">(</span>that<span class="token punctuation">.</span>data<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token function">rel</span><span class="token punctuation">(</span>thenResult<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>that<span class="token punctuation">.</span>error<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        promise <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">PP</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">rel<span class="token punctuation">,</span> rej</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                <span class="token keyword">var</span> thenResult <span class="token operator">=</span> <span class="token function">rejectFunc</span><span class="token punctuation">(</span>that<span class="token punctuation">.</span>error<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token function">rej</span><span class="token punctuation">(</span>thenResult<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">//返回一个新的promise</span>
+    <span class="token comment">// return new pp();</span>
+    <span class="token keyword">return</span> promise<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">//catch 方法接收前边的error方法, 其实就是一个 只有 reject 的 then</span>
+<span class="token comment">//这里直接把上边的 then copy 一半过来, 但是此处需要通过resolve进行接收</span>
+<span class="token class-name">PP</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function-variable function">catch</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">errorHandler</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">//需要根据promise的内容决定返回怎么样的promise</span>
+    <span class="token keyword">var</span> promise<span class="token punctuation">;</span>
+    <span class="token keyword">var</span> that <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">;</span>
+    <span class="token comment">//如果 this.data 有内容, 说明执行了成功的</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>that<span class="token punctuation">.</span>error<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        promise <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">PP</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">rel<span class="token punctuation">,</span> rej</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                <span class="token keyword">var</span> thenResult <span class="token operator">=</span> <span class="token function">errorHandler</span><span class="token punctuation">(</span>that<span class="token punctuation">.</span>error<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token function">rel</span><span class="token punctuation">(</span>thenResult<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">//返回一个新的promise</span>
+    <span class="token comment">// return new pp();</span>
+    <span class="token keyword">return</span> promise<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+</code></pre></div></div> <footer class="page-edit"><!----> <div class="last-updated"><span class="prefix">Last Updated:</span> <span class="time">6/11/2020, 12:56:09 AM</span></div></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/coder-log-vuepress/frontend/js/js-test.html" class="prev">
+        js-test
+      </a></span> <span class="next"><a href="/coder-log-vuepress/frontend/js/super与箭头函数.html">
+        super与箭头函数
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/coder-log-vuepress/assets/js/app.5183f16d.js" defer></script><script src="/coder-log-vuepress/assets/js/2.b73e1f60.js" defer></script><script src="/coder-log-vuepress/assets/js/90.5d53705b.js" defer></script>
+  </body>
+</html>
