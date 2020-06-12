@@ -16,6 +16,7 @@ pageClass: frontend
 一直一来“博闻强记”，过段时间不用就会很快忘记。建立一个体系或者有规律的内容是最容易理解和追溯的，
 
 放一些自己的链接：
+
 1. [自己搭建的小站kylincat.com](https://www.kylincat.com/)
     > 自己搭的小站，后来阿里云到期了， 也没什么流量大畜的想法，知道怎么搭建站点就好了，自己的内容最重要，然后就直接映射到 github 了。
 2. [博客园cnblog-北山秋叶](https://www.cnblogs.com/asdfq/)
