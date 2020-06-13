@@ -67,14 +67,17 @@ module.exports = {
                     title: 'javascript',
                     path: '/frontend/js/',
                     // collapsable: false,
-                    sidebarDepth: 0,
+                    sidebarDepth: 2,
                     children: [
 
+                        //js 整理
+                        'js/javascript-base',
+
                         //js基础
-                        'js/2019-10-12-重新审视原型链',
-                        'js/2018-08-04-js隐士转换',
-                        'js/2019-04-16-再说js隐式转换',
-                        'js/2019-04-17-一个闭包的小问题',
+                        // 'js/2019-10-12-重新审视原型链',
+                        // 'js/2018-08-04-js隐士转换',
+                        // 'js/2019-04-16-再说js隐式转换',
+                        // 'js/2019-04-17-一个闭包的小问题',
                         'js/2019-04-20-js中的队列',
                         'js/2019-05-07-javascript优先级的一个注意点',
                         'js/2019-05-20-javacript中的进制标识',
