@@ -23,11 +23,13 @@ git commit -m 'deploy'
 # 如果发布到 https://<USERNAME>.github.io
 # git push -f git@github.com:<USERNAME>/<USERNAME>.github.io.git master
 
-# 如果发布到 https://<USERNAME>.github.io/<REPO>
-# to github
-git push -f git@github.com:qszy1210/coder-log-vuepress.git master:gh-pages
-
 # to gitee
 git push -f git@gitee.com:qs1210/coder-log-vuepress.git master:gh-pages
+
+# 如果发布到 https://<USERNAME>.github.io/<REPO>
+# to github
+#git push -f git@github.com:qszy1210/coder-log-vuepress.git master:gh-pages
+
+
 
 cd -
