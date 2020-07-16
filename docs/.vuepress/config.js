@@ -169,6 +169,26 @@ module.exports = {
                     ]
                 },
                 {
+                    title: 'algorithm',
+                    path: '/frontend/algorithm/',
+                    // collapsable: false,
+                    sidebarDepth: 1,
+                    children: [
+                        'algorithm/算法梳理',
+                        'algorithm/2019-06-10-js-queue',
+                        'algorithm/2019-07-16-深度与广度优先学习',
+                        'algorithm/2019-08-03-teacherTee的题目-回文',
+                        'algorithm/2019-09-21-最接近的三数之和',
+                        'algorithm/2019-10-18-框架设计solid',
+                        'algorithm/2019-10-30-second-largest-element',
+                        'algorithm/2019-11-05-经典排序算法整理与实现',
+                        'algorithm/2019-12-03-排列组合问题',
+                        'algorithm/算法with-JavaScript',
+                        'algorithm/leetcode-2',
+                        'algorithm/leetcode-3',
+                    ]
+                },
+                {
                     title: 'git',
                     path: '/frontend/git/',
                     // collapsable: false,
